@@ -1,0 +1,66 @@
+#include<stdio.h> 
+#include<stdlib.h> 
+#include<iostream>
+using namespace std;
+
+typedef struct node
+{
+	int data;
+	struct node* next;
+	node*front = NULL;
+	node*rear = NULL;
+} Node;
+
+
+Node* newNode(int data)
+{
+	Node* temp = (Node*)malloc(sizeof(Node));
+	temp->data = data;
+	temp->next = NULL;
+
+	return temp;
+}
+
+void dequeue(Node** head)
+{
+	Node* temp = *head;
+	(*head) = (*head)->next;
+}
+
+void enqueue(Node** head, int data)
+{
+	Node*front = (*head);
+
+	Node* temp = newNode(data);
+
+	while (front->next != NULL)
+	{
+		front = front->next;
+	}
+
+	temp->next = front->next;
+	front->next = temp;
+}
+
+void display(Node*queue)
+{
+	while (queue != NULL)
+	{
+		cout << queue->data << " ";
+		dequeue(&queue);
+	}
+}
+
+
+int main()
+{
+	Node* queue = newNode(10);
+	enqueue(&queue, 30);
+	enqueue(&queue, 50);
+	enqueue(&queue, 40);
+	enqueue(&queue, 20);
+	dequeue(&queue);
+	display(queue);
+	system("pause");
+	return 0;
+}
